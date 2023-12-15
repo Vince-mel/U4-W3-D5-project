@@ -1,15 +1,26 @@
 package Vincenzo.entities;
 
-import javax.persistence.Entity;
-import java.time.LocalDate;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Libro extends CatalogoBibliotecario{
     private String autore;
+    @Enumerated(EnumType.STRING)
     private GENERE genere;
 
+    @ManyToMany(cascade = CascadeType.REMOVE)
+    @JoinTable(
+            name = "catalogo_libro",
+            joinColumns = @JoinColumn(name = "libro_id"),
+            inverseJoinColumns = @JoinColumn(name = "catalogo_id")
+    )
+    private List<CatalogoBibliotecario> catalogo = new ArrayList<>();
+
     public Libro(){}
-    public Libro(java.lang.String titolo, LocalDate annoDiPubblicazione,
+    public Libro(java.lang.String titolo, long annoDiPubblicazione,
                  int numeroDiPagine, java.lang.String autore,
                  GENERE genere) {
         super(titolo, annoDiPubblicazione, numeroDiPagine);

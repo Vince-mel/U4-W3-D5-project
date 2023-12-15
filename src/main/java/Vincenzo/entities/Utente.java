@@ -1,20 +1,22 @@
 package Vincenzo.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import java.rmi.server.UID;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Utente {
     @Id
     @GeneratedValue
-    private UID uid;
+    private Long id;
     private String nome;
     private String cognome;
     private LocalDate dataDiNascita;
     private long numeroDiTessera;
+
+    @OneToMany(mappedBy ="utente")
+    private List<Rent> noleggio = new ArrayList<>();
 
     public Utente(){}
 
@@ -25,8 +27,8 @@ public class Utente {
         this.numeroDiTessera = numeroDiTessera;
     }
 
-    public UID getUid() {
-        return uid;
+    public long getid() {
+        return id;
     }
 
     public String getNome() {
@@ -64,7 +66,7 @@ public class Utente {
     @Override
     public String toString() {
         return "Utente{" +
-                "uid=" + uid +
+                "uid=" + id +
                 ", nome='" + nome + '\'' +
                 ", cognome='" + cognome + '\'' +
                 ", dataDiNascita=" + dataDiNascita +

@@ -22,7 +22,7 @@ public class UtenteDAO {
 
         transazione.commit();
 
-        System.out.println("Utente " + utente.getNome() + " " + utente.getCognome() + " salvato");
+        System.out.println("Utente " + utente.getNome() + " " + utente.getCognome() + " è stato registrato con successo");
     };
     public Utente getById(long id){
         Utente found = em.find(Utente.class, id);
@@ -41,10 +41,10 @@ public class UtenteDAO {
 
             transaction.commit();
 
-            System.out.println("Utente " + "  cancellato");
+            System.out.println("Utente " + " è stato cancellato cancellato");
 
         } else {
-            System.out.println("Utente non trovato");
+            System.out.println("L'Utente non trovato");
         }
 
     }

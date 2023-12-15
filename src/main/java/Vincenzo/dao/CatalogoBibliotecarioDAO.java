@@ -4,6 +4,8 @@ import Vincenzo.entities.CatalogoBibliotecario;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
+import java.util.List;
 
 
 public class CatalogoBibliotecarioDAO {
@@ -22,15 +24,15 @@ public class CatalogoBibliotecarioDAO {
 
         transazione.commit();
 
-        System.out.println("L'articolo " + articolo.getTitolo() + " salvato");
+        System.out.println("L'articolo " + articolo.getTitolo() + " è stato inserito con successo");
     };
-    public CatalogoBibliotecario getById(long id){
-        CatalogoBibliotecario found = em.find(CatalogoBibliotecario.class, id);
+    public CatalogoBibliotecario cercaPerISBN(long isbn){
+        CatalogoBibliotecario found = em.find(CatalogoBibliotecario.class, isbn);
         return found;
     };
 
-    public void findByIdAndDelete(long id){
-        CatalogoBibliotecario found = this.getById(id);
+    public void rimuoviElementoPerISBN(long isbn){
+        CatalogoBibliotecario found = this.cercaPerISBN(isbn);
 
         if (found != null){
             EntityTransaction transaction = em.getTransaction();
@@ -41,12 +43,27 @@ public class CatalogoBibliotecarioDAO {
 
             transaction.commit();
 
-            System.out.println("L'articolo " + " cancellato");
+            System.out.println("L'articolo " + " è stato rimosso");
 
         } else {
             System.out.println("L'articolo non trovato");
         }
 
     };
+    public List<CatalogoBibliotecario> cercaPerAnnoPubblicazione(long anno) {
+        TypedQuery<CatalogoBibliotecario> query = em.createQuery(
+                "SELECT c FROM CatalogoBibliotecario c WHERE c.annoDiPubblicazione = :anno", CatalogoBibliotecario.class);
+        query.setParameter("anno", anno);
+        return query.getResultList();
+    }
+
+    public List<CatalogoBibliotecario> cercaPerAutore(String autore) {
+        TypedQuery<CatalogoBibliotecario> query = em.createQuery(
+                "SELECT c FROM CatalogoBibliotecario c WHERE c.autore = :autore", CatalogoBibliotecario.class);
+        query.setParameter("autore", autore);
+        return query.getResultList();
+    }
+
+
 
 }
