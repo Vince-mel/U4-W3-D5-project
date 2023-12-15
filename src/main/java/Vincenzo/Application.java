@@ -42,8 +42,6 @@ public class Application {
         Rent rent2 = new Rent(user1, book1);
         rs.save(rent2);
 
-
-
         cbd.rimuoviElementoPerISBN(38);
 
         System.out.printf("Cerca per anno di pubblicazione: ");
