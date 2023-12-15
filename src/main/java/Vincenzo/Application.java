@@ -21,38 +21,41 @@ public class Application {
         CatalogoBibliotecarioDAO cbd = new CatalogoBibliotecarioDAO(em);
         UtenteDAO us = new UtenteDAO(em);
         RentDAO rs = new RentDAO(em);
-        Faker faker = new Faker();
+
 
 
         Utente user1 = new Utente("Remo","Labarca", LocalDate.of(1995,2,8),489454);
-       us.save(user1);
+        us.save(user1);
 
         Utente user2 = new Utente("Guido","Lavespa", LocalDate.of(1998,2,9),489454);
-     us.save(user2);
+        us.save(user2);
         Libro book1 = new Libro("Harry Potter e la pietra filosofale ",1990,300,"Rowling", GENERE.FANTASY);
-      cbd.save(book1);
+        cbd.save(book1);
 
         Libro book2 = new Libro("Il Signore degli anelli",1990,200,"Tolkien", GENERE.FANTASY);
-       cbd.save(book2);
+        cbd.save(book2);
 
 
 
         Rent rent1= new Rent(user1,book2);
-       rs.save(rent1);
+        rs.save(rent1);
         Rent rent2 = new Rent(user1, book1);
-       rs.save(rent2);
+        rs.save(rent2);
 
 
 
-         cbd.rimuoviElementoPerISBN(38);
+        cbd.rimuoviElementoPerISBN(38);
 
-        System.out.printf("Cerca per anno di publicazione: ");
+        System.out.printf("Cerca per anno di pubblicazione: ");
 
         cbd.cercaPerAnnoPubblicazione(1990).forEach(System.out::println);
 
         System.out.printf("Cerca per autore: ");
 
         cbd.cercaPerAutore("Rowling").forEach(System.out::println);
+
+        System.out.println("Cerca per id e cancella: ");
+        rs.findByIdAndDelete(5);
 
 
         em.close();
